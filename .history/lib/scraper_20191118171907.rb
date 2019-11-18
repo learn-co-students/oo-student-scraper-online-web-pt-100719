@@ -30,7 +30,7 @@ class Scraper
       when link['href'].include?(".com")
         student[:blog] = link
       end
-    end
+      end
       
       # social = student.css(".social-icon-container a:first").attribute("href").value
       # profile_quote = student.css(".profile-quote").text
