@@ -17,24 +17,27 @@ class Scraper
   end
 
   def self.scrape_profile_page(profile_url)
-    doc_page = Nokogiri::HTML(open(profile_url)) # Parsed page
-    bio_hash = {}
-    bio_hash[:profile_quote] = doc_page.css(".profile-quote").text
-      bio_hash[:bio] = doc_page.css(".description-holder p").text
-    
-    doc_page.css(".social-icon-container a").each do |value| # Iterates through each social icon and checks if attribute href includes certain string
-      case # Case statement creates key/value pair and pushs to bio_hash
-      when value.attr('href').include?("twitter")
-        bio_hash[:twitter] = value.attr('href')
-      when value.attr('href').include?("linkedin")
-        bio_hash[:linkedin] = value.attr('href')
-      when value.attr('href').include?("github")
-        bio_hash[:github] = value.attr('href')
-      when value.attr('href').include?(".com")
-        bio_hash[:blog] = value.attr('href')
+    students_bio = Nokogiri::HTML(open(profile_url)) # Parsed page
+    student_twitter = []
+    student_linkedin = []
+    student_github = []
+    bio = {}
+    students_bio.css("div.profile").each do |student| # Accesses student bio page iterating over each ******* NOT FINISHED!
+      student.css(".social-icon-container a").each do |link|
+        case
+        when link['href'].include?("twitter")
+          student_twitter << link['href']
+        when link['href'].include?("linkedin")
+          student_linkedin << link['href']
+        when link['href'].include?("github")
+          student_github << link['href']
       end
+    binding.pry
+      # social = student.css(".social-icon-container a:first").attribute("href").value
+      # profile_quote = student.css(".profile-quote").text
+      # bio = student.css(".description-holder p").text
+      # binding.pry
     end
-    bio_hash
   end
 end
 
